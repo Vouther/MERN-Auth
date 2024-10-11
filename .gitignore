@@ -1,0 +1,27 @@
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Other files and folders
+.settings/
+
+# Ignorar node_modules en la raíz del proyecto
+node_modules/
+
+# Ignorar node_modules dentro de la carpeta backend
+backend/node_modules/
+
+# Ignorar node_modules dentro de la carpeta frontend
+frontend/node_modules/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
