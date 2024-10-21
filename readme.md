@@ -63,3 +63,7 @@ CommonJS usa:
 require() y module.exports.
 
 5- Probar servidor con node index.js
+
+Para realizar la verificacion de email, envio de menasajes de bienvenida o cambio de contraseña instalamos mailtrap.
+Probamos que este todo correcto con:
+$ node ./mailtrap/mailtrapConfig.js

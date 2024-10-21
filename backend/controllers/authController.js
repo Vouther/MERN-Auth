@@ -2,7 +2,7 @@ import { User } from "../db/models/User.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { generateTokenAndSetCookie } from "../db/utils/generateTokenAndSetCookie.js"
-import { sendVerificationEmail } from "../mailtrap/emails.js"
+import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js"
 
 export const signup = async (req, res) => {
     const { email, password, name } = req.body;
@@ -59,6 +59,40 @@ export const signup = async (req, res) => {
             message: "Error del servidor, inténtalo nuevamente",
             error: err.message
         });
+    }
+};
+
+export const verifyEmail = async (req, res) => {
+    const { code } = req.body;
+
+    if (!code) {
+        return res.status(400).json({ success: false, message: "El código de verificación es requerido" });
+    }
+
+    try {
+        const user = await User.findOne({
+            verificationToken: code,
+            verificationTokenExpiresAt: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Código de verificación inválido o expirado" });
+        }
+
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        user.verificationTokenExpiresAt = undefined;
+        await user.save();
+
+        // Enviar correo de bienvenida en segundo plano
+        sendWelcomeEmail(user.email, user.name);
+
+        console.log(`Correo verificado exitosamente para el usuario con email: ${user.email}`);
+
+        res.status(200).json({ success: true, message: "Correo verificado exitosamente"});
+
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Error del servidor", error: err.message });
     }
 };
 
