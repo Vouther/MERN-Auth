@@ -1,5 +1,7 @@
 import express from "express";
-import {signup, login, logout, verifyEmail, forgotPassword, resetPassword} from '../controllers/authController.js';
+import {signup, login, logout, verifyEmail, forgotPassword, resetPassword, checkAuth} from '../controllers/authController.js';
+import { verify } from "crypto";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 //Registro de usuario
@@ -14,5 +16,7 @@ router.post("/verify-email", verifyEmail);
 router.post('/forgot-password', forgotPassword);
 //Cambiar contraseña
 router.post('/reset-password/:token', resetPassword);
+
+router.get('/check-auth', verifyToken, checkAuth);
 
 export default router;

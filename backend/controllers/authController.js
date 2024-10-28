@@ -225,3 +225,17 @@ export const resetPassword = async (req, res) => {
         res.status(500).json({ success: false, message: "Error del servidor, intenta nuevamente más tarde." });
     }
 };
+
+export const checkAuth = async (req, res) => {
+    try {
+
+        const user = await User.findById(req.userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        res.status(200).json({ success: true, user });
+    } catch (err) {
+        console.error("Error in checkAuth:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+};

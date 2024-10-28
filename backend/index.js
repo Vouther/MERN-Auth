@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import { connectDB } from './db/connectDB.js';
 import authRoutes from './routes/authRoutes.js';
 
@@ -7,7 +8,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); //permite analizar la solicitud entrante: req.body
+app.use(cookieParser()); //Permite analizar las cookies entrantes
 
 // Conectamos la base de datos antes de iniciar el servidor
 connectDB();
