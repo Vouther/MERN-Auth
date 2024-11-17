@@ -3,6 +3,7 @@ import FloatingShape from './components/FloatingShape.jsx'
 
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import EmailVerifyPage from './pages/EmailVerifyPage.jsx'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path='/' element={"Home"}></Route>
         <Route path='/signup' element={<SignUpPage></SignUpPage>}></Route>
         <Route path='/login' element={<LoginPage></LoginPage>}></Route>
+        <Route path='/verify-email' element={<EmailVerifyPage></EmailVerifyPage>}></Route>
       </Routes>
     </div>
   )
