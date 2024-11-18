@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from "react"
-//import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
+import { useAuthSrote } from "../store/authStore"
+import toast from "react-hot-toast"
 
 const EmailVerifyPage = () => {
 
     const [code, setCode] = useState(["","","","","",""])
     const inputRefs = useRef([])
-    //const navigate = useNavigate();
-    const isLoading = false;
+    const navigate = useNavigate();
+
+    const {error, isLoading, verifyEmail} = useAuthSrote();
 
     const handleChange = (index, value) => {
         const newCode = [...code];
@@ -40,10 +43,17 @@ const EmailVerifyPage = () => {
             inputRefs.current[index -1].focus();
         }};
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const verificationCode = code.join(" ");
         alert("Verification Code Submitted: " + verificationCode)
+        try {
+            await verifyEmail(verificationCode);
+            navigate("/");
+            toast.success("Correo verificado correctamente")
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     // Envío automático cuando se completan todos los campos
@@ -81,6 +91,7 @@ const EmailVerifyPage = () => {
                         />
                     ))}
                 </div>
+                {error && <p className="text-red-500 font-semibold mt-2">{error}</p>}
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
