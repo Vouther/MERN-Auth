@@ -27,7 +27,8 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Generamos el token de verificación
-        const verificationToken = crypto.randomBytes(32).toString("hex");
+        //const verificationToken = crypto.randomBytes(32).toString("hex");
+        const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
         // Crearmos el nuevo usuario
         const user = new User({
@@ -231,11 +232,11 @@ export const checkAuth = async (req, res) => {
 
         const user = await User.findById(req.userId).select('-password');
         if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
+            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
         }
         res.status(200).json({ success: true, user });
     } catch (err) {
         console.error("Error in checkAuth:", err);
-        res.status(500).json({ success: false, message: "Server error" });
+        res.status(500).json({ success: false, message: "Error del servidor" });
     }
 };

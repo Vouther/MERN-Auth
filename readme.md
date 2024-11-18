@@ -67,3 +67,9 @@ require() y module.exports.
 Para realizar la verificacion de email, envio de menasajes de bienvenida o cambio de contraseña instalamos mailtrap.
 Probamos que este todo correcto con:
 $ node ./mailtrap/mailtrapConfig.js
+
+6- Instalamos cors en el backend para poder consumir la api desde el front
+npm i cors
+
+Agregamos la configuracion en el index.js del backend
+
