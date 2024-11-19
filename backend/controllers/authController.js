@@ -50,10 +50,9 @@ export const signup = async (req, res) => {
             success: true,
             message: "Usuario creado exitosamente. Revisa tu correo para verificar tu cuenta.",
             user: {
-                id: user._id,
-                email: user.email,
-                name: user.name
-            }
+				...user._doc,
+				password: undefined,
+			},
         });
     } catch (err) {
         res.status(500).json({
@@ -129,10 +128,9 @@ export const login = async (req, res) => {
             success: true,
             message: "Inicio de sesión exitoso",
             user: {
-                id: user._id,
-                email: user.email,
-                name: user.name
-            }
+				...user._doc,
+				password: undefined,
+			},
         });
     } catch (err) {
         console.error("Error al iniciar sesión", err.message);

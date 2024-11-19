@@ -9,7 +9,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({origin: 'http://localhost:5173/', credentials: true}));
+app.use(cors({origin: 'http://localhost:5173', credentials: true}));
 
 app.use(express.json()); //permite analizar la solicitud entrante: req.body
 app.use(cookieParser()); //Permite analizar las cookies entrantes
