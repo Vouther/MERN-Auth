@@ -45,8 +45,8 @@ const EmailVerifyPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const verificationCode = code.join(" ");
-        alert("Verification Code Submitted: " + verificationCode)
+        const verificationCode = code.join("");
+        alert("Código de verificación enviado: " + verificationCode)
         try {
             await verifyEmail(verificationCode);
             navigate("/");

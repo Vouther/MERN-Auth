@@ -7,7 +7,6 @@ Al usar Zustand, cualquier cambio en el estado dispara una re-renderización en 
 
 const API_URL = "http://localhost:5000/api/auth"
 
-
 //Configuramos Axios para incluir automáticamente las cookies en las solicitudes
 axios.defaults.withCredentials = true;
 
@@ -18,6 +17,7 @@ export const useAuthSrote = create((set) => ({
     isLoading: false,
     isCheckingAuth: true,
 
+    //Registro de usuarios
     signup: async(email, password, name) => {
         set({isLoading: true, error: null});
         try{
@@ -29,6 +29,7 @@ export const useAuthSrote = create((set) => ({
         }
     },
 
+    //Inicion de sesion
     login: async(email, password) => {
         set({isLoading: true, error: null});
         try{
@@ -45,6 +46,19 @@ export const useAuthSrote = create((set) => ({
         }
     },
 
+    //Cierre de sesion
+    logout: async() => {
+        set({ isLoading: true, error: null});
+        try{
+            await axios.post(`${API_URL}/logout`);
+            set({ user: null, error: null, isAuthenticated: false, isLoading: false });
+        } catch (err) {
+            set({ error: "Error al cerrar sesion", isLoading: false})
+            throw err;
+        }
+    },
+
+    //Verificacion del correo electronico
     verifyEmail: async(code) => {
         set({isLoading: true, error: null});
         try{
@@ -57,7 +71,9 @@ export const useAuthSrote = create((set) => ({
         }
     },
 
+    //Verificacion de autenticación
     checkAuth: async () => {
+        await new Promise((resolve) => setTimeout(resolve,2000));
         set({isCheckingAuth: true, error: null});
         try{
             const response = await axios.get(`${API_URL}/check-auth`);

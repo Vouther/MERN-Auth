@@ -21,18 +21,18 @@ const SignUpPage = () => {
 
         try {
             await signup(email, password, name);
-            navigate("verify-email");
+            navigate("/verify-email");
         } catch (err) {
             console.log(err)
         }
     }
 
   return (
-    <motion.dev
-    initial={{opacity: 0, y:20}}
-    animate={{opacity: 1, y:0}}
-    transition={{duration: 0.5}}
-    className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'
+    <motion.div
+        initial={{opacity: 0, y:20}}
+        animate={{opacity: 1, y:0}}
+        transition={{duration: 0.5}}
+        className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'
     >
         <div className="p-8">
 
@@ -83,7 +83,7 @@ const SignUpPage = () => {
                 <Link to={"/login"} className="text-blue-400 hover:underline">Acceder</Link>
             </p>
         </div>
-    </motion.dev>
+    </motion.div>
   )
 }
 

@@ -4,11 +4,13 @@ import FloatingShape from './components/FloatingShape.jsx'
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import EmailVerifyPage from './pages/EmailVerifyPage.jsx'
+import HomePage from './pages/HomePage.jsx'
+
+import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 import { Toaster } from 'react-hot-toast'
 import { useAuthSrote } from './store/authStore.js'
 import { useEffect } from 'react'
-import HomePage from './pages/HomePage.jsx'
 
 // Rutas protegidas que requieren autenticación
 const ProtectedRoute = ({children}) => {
@@ -43,6 +45,8 @@ export default function App() {
     checkAuth();
   },[checkAuth]);
 
+  if(isCheckingAuth) return <LoadingSpinner></LoadingSpinner>
+
   console.log("isAuthenticated", isAuthenticated);
   console.log("user",user);
   console.log("isCheckingAuth", isCheckingAuth);
@@ -52,23 +56,33 @@ export default function App() {
       <FloatingShape color="bg-blue-500" size="w-64 h-64" top="-5%" left="10%" delay={0}></FloatingShape>
       <FloatingShape color="bg-blue-500" size="w-48 h-48" top="70%" left="80%" delay={5}></FloatingShape>
       <FloatingShape color="bg-blue-500" size="w-32 h-32" top="40%" left="-10%" delay={2}></FloatingShape>
+
       <Routes>
+
         <Route path='/' element={
           <ProtectedRoute>
             <HomePage></HomePage>
           </ProtectedRoute>
         }></Route>
+
         <Route path='/signup' element={
           <RedirectAuthenticated>
             <SignUpPage></SignUpPage>
           </RedirectAuthenticated>
-          }></Route>
+        }></Route>
+
         <Route path='/login' element={
           <RedirectAuthenticated>
             <LoginPage></LoginPage>
           </RedirectAuthenticated>
-          }></Route>
-        <Route path='/verify-email' element={<EmailVerifyPage></EmailVerifyPage>}></Route>
+        }></Route>
+
+        <Route path='/verify-email' element={
+          <RedirectAuthenticated>
+            <EmailVerifyPage></EmailVerifyPage>
+          </RedirectAuthenticated>
+        }></Route>
+
       </Routes>
       <Toaster></Toaster>
     </div>

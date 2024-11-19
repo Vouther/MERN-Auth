@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Lock, Mail, Loader } from "lucide-react";
 import Input from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useAuthSrote } from "../store/authStore";
 
 const LoginPage = () => {
@@ -63,14 +63,14 @@ const LoginPage = () => {
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? <Loader className="w-6 h-6"/> : "Acceder"}
+            {isLoading ? <Loader className="w-6 h-6 animate-spin  mx-auto"/> : "Acceder"}
           </motion.button>
         </form>
       </div>
       <div className="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
             <p className="text-sm text-gray-400">
                 No tienes una cuenta?{" "}
-                <Link to={"/login"} className="text-blue-400 hover:underline animate-spin mx-auto">Registrarse</Link>
+                <Link to={"/signup"} className="text-blue-400 hover:underline animate-spin mx-auto">Registrarse</Link>
             </p>
         </div>
     </motion.div>
