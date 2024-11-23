@@ -16,6 +16,7 @@ export const useAuthSrote = create((set) => ({
     error: null,
     isLoading: false,
     isCheckingAuth: true,
+    message: null,
 
     //Registro de usuarios
     signup: async(email, password, name) => {
@@ -81,6 +82,34 @@ export const useAuthSrote = create((set) => ({
         } catch (err) {
             set({error: null, isCheckingAuth: false, isAuthenticated: false})
             console.log(err);
+        }
+    },
+
+    //Solicitar cambio de contraseña
+    forgotPassword: async (email) => {
+        set({ isLoading: true, error: null});
+        try{
+            const response = await axios.post(`${API_URL}/forgot-password`, {email});
+            set({ message: response.data.message, isLoading: false });
+        }catch(err) {
+            set({
+                isLoading: false,
+                error: err.response.data.message || "Error al enviar contraseña de restablecimiento"
+            });
+            throw err;
+        }
+    },
+
+    // Ralizar cambio de contraseña
+    resetPassword: async (token, email, password) => {
+        set({ isLoading: true, error: null});
+
+        try{
+            const response = await axios.post(`${API_URL}/reset-password/${token}`, {email, password});
+            set({ message: response.data.message, isLoading: false });
+        } catch(err) {
+            set({ isLoading: false, error: err.response.data.message || "Error al restablecer la contraseña"});
+            throw err;
         }
     }
 }))

@@ -5,6 +5,8 @@ import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import EmailVerifyPage from './pages/EmailVerifyPage.jsx'
 import HomePage from './pages/HomePage.jsx'
+import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx'
+import ResetPasswordPage from './pages/ResetPasswordPage.jsx'
 
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
@@ -80,6 +82,18 @@ export default function App() {
         <Route path='/verify-email' element={
           <RedirectAuthenticated>
             <EmailVerifyPage></EmailVerifyPage>
+          </RedirectAuthenticated>
+        }></Route>
+
+        <Route path='/forgot-password' element={
+          <RedirectAuthenticated>
+            <ForgotPasswordPage></ForgotPasswordPage>
+          </RedirectAuthenticated>
+        }></Route>
+
+        <Route path='/reset-password/:token' element = {
+          <RedirectAuthenticated>
+            <ResetPasswordPage></ResetPasswordPage>
           </RedirectAuthenticated>
         }></Route>
 
